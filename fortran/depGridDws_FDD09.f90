@@ -14,11 +14,12 @@
   real,allocatable :: dwsvalue(:,:,:)
   integer :: stat=0
   integer :: zdepth
-  character(len=2) :: zdepthstr
+  character(len=2) :: zdepthstr,nxstr
   character(len=15) :: absfie
   character(len=15) :: perturfie
   character(len=15) :: dwsfile
   character(len=20) :: line
+  character(len=30) :: formatread
   
   open(1,file='MOD',status='old')
   read(1,*) bld,nx,ny,nz
@@ -28,10 +29,13 @@
   read(1,*) xn
   read(1,*) yn
   read(1,*) zn
+  
+  write(nxstr,'(I2)') nx
   allocate(modvel(nx,ny,nz))
+  formatread='('//trim(nxstr)//'f6.2)'
   Do k = 1, nz
     Do j = 1, ny
-    read (1, '(22f6.2)',iostat=stat) (modvel(i,j,k), i=1,nx)
+    read (1, trim(formatread),iostat=stat) (modvel(i,j,k), i=1,nx)
 	if(stat /= 0) exit
     End Do
   End Do 
@@ -47,16 +51,18 @@
   close(2)
  
   allocate(absvel(nx,ny,nz))
+  formatread='('//trim(nxstr)//'f7.3)'
   open(3,file='Vp_model.dat',status='old')
     Do k = 1, nz
     Do j = 1, ny
-    read (3, '(22f7.3)',iostat=stat) (absvel(i,j,k), i=1,nx)
+    read (3, trim(formatread),iostat=stat) (absvel(i,j,k), i=1,nx)
 	if(stat /= 0) exit
     End Do
     End Do
   close(3)
   
   allocate(dwsvalue(nx,ny,nz))
+  formatread='('//trim(nxstr)//'f10.2)'
   open(4,file='tomofdd.vel',status='old')
   do while(.true.)
 10  read(4,'(a)',iostat=stat) line
@@ -64,7 +70,7 @@
   if (trim(line) == ' DWS for P-wave.') then
     Do k = 1, nz
     Do j = 1, ny
-    read (4, '(22f10.2)') (dwsvalue(i,j,k), i=1,nx)	
+    read (4, trim(formatread)) (dwsvalue(i,j,k), i=1,nx)	
     End Do
     End Do
 	else
@@ -75,6 +81,7 @@
   
 ! Output absolute velocity file
   do k=2,nz-1
+  if(zn(k) .GE. 0 .and. zn(k) .LT. 100) then
   zdepth=INT(zn(k))
   if (zdepth < 10) then
   write(zdepthstr,'(I1)') zdepth
@@ -90,10 +97,12 @@
   end do
   end do
   close(10+k)
+  end if
   end do
   
 ! Output relative perturbation velocity file  
   do k=2,nz-1
+  if(zn(k) .GE. 0 .and. zn(k) .LT. 100) then
   zdepth=INT(zn(k))
   if (zdepth < 10) then
   write(zdepthstr,'(I1)') zdepth
@@ -109,10 +118,12 @@
   end do
   end do
   close(20+k)
+  end if
   end do
   
 ! output DWS for every node from tomoDD.vel  
   do k=2,nz-1
+  if(zn(k) .GE. 0 .and. zn(k) .LT. 100) then
   zdepth=INT(zn(k))
   if (zdepth < 10) then
   write(zdepthstr,'(I1)') zdepth
@@ -128,6 +139,7 @@
   end do
   end do
   close(30+k)
+  end if
   end do
   
   stop
