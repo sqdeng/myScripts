@@ -1,0 +1,8 @@
+**** input phase file
+outphaForVelest.dat
+**** input station file
+singstaP10.dat
+**** output cnv file for velest
+phaseF.cnv
+**** output stalist file for velest
+stalistF.sta
