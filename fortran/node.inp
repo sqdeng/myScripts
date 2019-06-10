@@ -1,0 +1,22 @@
+*output  mod file about mod_sc vp
+MOD
+*output  mod file about vp and vp/vs
+MODPS
+*output mod file about vp FOR TOMOdd_SYN
+MODSYNP
+*output mod file about vp/VSR TOMOdd_SYN
+MODSYNPS
+*bld,nx,ny,nz 
+0.1  27  21  14
+*x direction node
+93.0 	97.0 	98.0 	98.5 	98.8 	99.1 	99.4 	99.7 	100.0 	100.3 	100.6 	100.9 	101.2 	101.5 	101.8 	102.1 	102.4 	102.7 	103.0 	103.3 	103.6 	103.9 	104.2 	104.5 	105.0 	106.0 	110.0
+*y direction node
+18.0 	22.0 	23.0 	23.4 	23.7 	24.0 	24.3 	24.6 	24.9 	25.2 	25.5 	25.8 	26.1 	26.4 	26.7 	27.0 	27.3 	27.6 	28.0 	29.0 	33.0
+*z direction node
+-40.00   -5.00  0.00   5.00  10.00  15.00  20.00  25.00  30.00  40.00  50.00  60.00  80.00 800.00
+*vp
+0.34 	5.00 	5.66 	5.75 	5.80 	5.90 	6.09 	6.18 	6.30 	6.80 	7.80 	7.90 	8.00  	9.63
+*vs (= vp/sqrt(3.0))
+0 0 0 0 0 0 0 0 0 0 0 0 0 0
+*disturbance quantity( %)
+6
