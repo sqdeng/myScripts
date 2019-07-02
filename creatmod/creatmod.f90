@@ -102,7 +102,7 @@
   Open (2, File=modps, Status='unknown')
   Open (3, File=synmodp, Status='unknown')
   Open (4, File=synmodps, Status='unknown')
-  open (20, File='grid.dat', Status='unknown')
+  open (20, File='grid_gmt.dat', Status='unknown')
 
   Write (1, 2000) bld, nx, ny, nz
   Write (1, '(50f8.2)')(xn(i), i=1, nx)
