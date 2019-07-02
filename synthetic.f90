@@ -6,7 +6,7 @@
 	
 	integer :: ndt=0
 	integer,allocatable:: dtidone(:), dtidtwo(:)
-    character(len=7) :: dtsta
+	character(len=7) :: dtsta
 	real :: dtimeone, dtimetwo
 	real :: dtweight
 	character :: dtpha
@@ -32,24 +32,24 @@
 	open(2,file='syn.dt' )
 	 i=1
      do while(.true.)
-     read(1,*,iostat=error) dtidone(i), dtidtwo(i), dtsta, dtimeone, dtimetwo, dtweight, dtpha
-     if(error/=0) exit
-	 if(i>1) then
-	   if(dtidone(i) == dtidone(i-1) .and. dtidtwo(i) == dtidtwo(i-1)) then
-	   write(2,1002) dtsta, dtimeone, dtimetwo, dtweight, dtpha
-	   else
-	   write(2,1001) "#",dtidone(i), dtidtwo(i)
-	   write(2,1002) dtsta, dtimeone, dtimetwo, dtweight, dtpha
+       read(1,*,iostat=error) dtidone(i), dtidtwo(i), dtsta, dtimeone, dtimetwo, dtweight, dtpha
+       if(error/=0) exit
+	   if(i>1) then
+	     if(dtidone(i) == dtidone(i-1) .and. dtidtwo(i) == dtidtwo(i-1)) then
+	     write(2,1002) dtsta, dtimeone, dtimetwo, dtweight, dtpha
+	     else
+	     write(2,1001) "#",dtidone(i), dtidtwo(i)
+	     write(2,1002) dtsta, dtimeone, dtimetwo, dtweight, dtpha
+	     end if
+	   else 
+	     write(2,1001) "#",dtidone(i), dtidtwo(i)
+	     write(2,1002) dtsta, dtimeone, dtimetwo, dtweight, dtpha
 	   end if
-	 else 
-	 write(2,1001) "#",dtidone(i), dtidtwo(i)
-	 write(2,1002) dtsta, dtimeone, dtimetwo, dtweight, dtpha
-	 end if
-     i=i+1
-	 if(i>=ndt) then
-	 write(*,*) "Please increse ndt parameter..."
-	 stop
-	 end if
+       i=i+1
+	   if(i>=ndt) then
+	     write(*,*) "Please increse ndt parameter..."
+	   stop
+	   end if
      end do
 	
 	close(1)
@@ -61,24 +61,24 @@
 	open(4,file='syn.absolute' )
 	 i=1
      do while(.true.)
-     read(3,*,iostat=error) absoid(i), abosta, abotime, aboweight, abopha
-     if(error/=0) exit
-	 if(i>1) then
-	   if(absoid(i) == absoid(i-1)) then
-	   write(4,2002) abosta, abotime, aboweight, abopha
+       read(3,*,iostat=error) absoid(i), abosta, abotime, aboweight, abopha
+       if(error/=0) exit
+	   if(i>1) then
+	     if(absoid(i) == absoid(i-1)) then
+	     write(4,2002) abosta, abotime, aboweight, abopha
+	     else
+	     write(4,2001) "#",absoid(i)
+	     write(4,2002) abosta, abotime, aboweight, abopha
+	     end if
 	   else
-	   write(4,2001) "#",absoid(i)
-	   write(4,2002) abosta, abotime, aboweight, abopha
+	     write(4,2001) "#",absoid(i)
+	     write(4,2002) abosta, abotime, aboweight, abopha
 	   end if
-	 else
-	 write(4,2001) "#",absoid(i)
-	 write(4,2002) abosta, abotime, aboweight, abopha
-	 end if
-     i=i+1
-	 if(i>=nabo) then
-	 write(*,*) "Please increse nabo parameter..."
-	 stop
-	 end if
+       i=i+1
+	   if(i>=nabo) then
+	     write(*,*) "Please increse nabo parameter..."
+	   stop
+	   end if
      end do
 	
 	close(3)
