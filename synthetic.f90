@@ -1,20 +1,31 @@
 	program synthetic
 	implicit none 
 	integer :: error,i
+	character(len=20) :: filedt,fileab
+	integer,external :: line_file
 	
-	integer,parameter :: ndt=4.0E6
-	integer:: dtidone(ndt), dtidtwo(ndt)
+	integer :: ndt=0
+	integer,allocatable:: dtidone(:), dtidtwo(:)
     character(len=7) :: dtsta
 	real :: dtimeone, dtimetwo
 	real :: dtweight
 	character :: dtpha
 
-	integer,parameter :: nabo=5.0E5
-	integer :: absoid(nabo)
+	integer :: nabo=0
+	integer,allocatable :: absoid(:)
 	character(len=7) :: abosta
 	real :: abotime
 	real :: aboweight
 	character :: abopha
+	
+	filedt='dt.syn'
+	fileab='absolute.syn'
+	ndt=line_file(filedt)+5
+	nabo=line_file(fileab)+5
+	write(*,*) ndt,nabo
+	allocate(dtidone(ndt))
+	allocate(dtidtwo(ndt))
+	allocate(absoid(nabo))
 	
 	write(*,*) 'Transforming synthetic data starts... '
 	open(1,file='dt.syn',status='old')
@@ -78,3 +89,18 @@
 	
 	stop
 	end program
+
+	integer function line_file(filein)
+	implicit none
+	integer :: error
+	character(len=20) filein,line
+	line_file=0
+	open(10,file=trim(filein),status='old')
+	do while(.true.)
+		read(10,*,iostat=error) line
+		if(error/=0) exit
+		line_file=line_file+1
+	end do
+	close(10)
+	return
+	end	
